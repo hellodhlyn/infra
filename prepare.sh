@@ -32,7 +32,17 @@ kubectl() {
     cfg_path=${cfg_path%/*}
   done
 
-  $bin_path/.bin/k3s kubectl --kubeconfig=$cfg_path/kubeconfig $*
+  ns_path=$PWD
+  while [[ "$ns_path" != "" && ${ns_path##*/} != "ns-"* ]]; do
+    ns_path=${ns_path%/*}
+  done
+
+  ns=${ns_path##*/}
+  if [[ "$ns" == "" ]]; then
+    ns="default"
+  fi
+
+  $bin_path/.bin/k3s kubectl --kubeconfig=$cfg_path/kubeconfig --namespace=${ns/ns-/} $*
 }
 
 export_function kubectl

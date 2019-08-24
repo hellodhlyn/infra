@@ -1,4 +1,25 @@
 ---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: lynlab
+  namespace: lynlab
+  annotations:
+    kubernetes.io/ingress.class: traefik
+spec:
+  tls:
+  - hosts:
+    - apis.lynlab.co.kr
+    secretName: tls-certs
+  rules:
+  - host: apis.lynlab.co.kr
+    http:
+      paths:
+      - backend:
+          serviceName: lynlab
+          servicePort: 8080
+
+---
 apiVersion: v1
 kind: Service
 metadata:
