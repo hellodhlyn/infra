@@ -9,3 +9,9 @@ kind: Namespace
 apiVersion: v1
 metadata:
   name: lynlab
+
+---
+kind: Namespace
+apiVersion: v1
+metadata:
+  name: webdonalds
