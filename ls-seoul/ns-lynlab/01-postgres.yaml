@@ -6,7 +6,7 @@ metadata:
   namespace: lynlab
 spec:
   accessModes:
-    - ReadWriteOnce
+  - ReadWriteOnce
   storageClassName: local-path
   resources:
     requests:
@@ -46,24 +46,26 @@ spec:
     metadata:
       labels:
         app: postgres
+    nodeSelector:
+      group: volumable
     spec:
       containers:
-        - image: postgres:9.6
+      - image: postgres:9.6
+        name: postgres
+        env:
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: secrets
+              key: POSTGRES_ROOT_PASSWORD
+        ports:
+        - containerPort: 5432
           name: postgres
-          env:
-            - name: POSTGRES_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: secrets
-                  key: POSTGRES_ROOT_PASSWORD
-          ports:
-            - containerPort: 5432
-              name: postgres
-          volumeMounts:
-            - name: postgres-data
-              mountPath: /var/lib/postgresql/data
-              subPath: postgres
-      volumes:
+        volumeMounts:
         - name: postgres-data
-          persistentVolumeClaim:
-            claimName: postgres-pvc
+          mountPath: /var/lib/postgresql/data
+          subPath: postgres
+      volumes:
+      - name: postgres-data
+        persistentVolumeClaim:
+          claimName: postgres-pvc
