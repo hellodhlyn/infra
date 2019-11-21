@@ -2,67 +2,74 @@
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: web
+  name: elysia
   namespace: lynlab
   annotations:
     kubernetes.io/ingress.class: traefik
 spec:
   tls:
   - hosts:
-    - lynlab.co.kr
+    - elysia.lynlab.co.kr
     secretName: tls-certs
   rules:
-  - host: lynlab.co.kr
+  - host: elysia.lynlab.co.kr
     http:
       paths:
       - backend:
-          serviceName: web
+          serviceName: elysia
           servicePort: 8080
 
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: web
+  name: elysia
   namespace: lynlab
   labels:
-    app: web
+    name: elysia
 spec:
   type: NodePort
   selector:
-    app: web
+    name: elysia
   ports:
   - port: 8080
-    targetPort: 8080
+    targetPort: 3000
 
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: web
+  name: elysia
   namespace: lynlab
   labels:
-    app: web
+    name: elysia
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: web
+      name: elysia
   template:
     metadata:
       labels:
-        app: web
+        name: elysia
     spec:
       containers:
-      - image: lynlab/lynlab-web:v1.5.0
-        name: lynlab-web
+      - image: hellodhlyn/elysia:v0.1.2
+        name: elysia
         resources:
           requests:
-            memory: 100Mi
+            memory: 150Mi
             cpu: 100m
           limits:
-            memory: 100Mi
+            memory: 150Mi
             cpu: 100m
+        env:
+          - name: ELYSIA_CORS_ORIGIN
+            value: https://lynlab.co.kr
         ports:
-        - containerPort: 8080
-          name: web-port
+          - containerPort: 3000
+            name: elysia-port
+        livenessProbe:
+          httpGet:
+            path: /ping
+            port: elysia-port

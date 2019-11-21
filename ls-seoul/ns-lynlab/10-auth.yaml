@@ -1,4 +1,25 @@
 ---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: auth
+  namespace: lynlab
+  annotations:
+    kubernetes.io/ingress.class: traefik
+spec:
+  tls:
+  - hosts:
+    - auth.lynlab.co.kr
+    secretName: tls-certs
+  rules:
+  - host: auth.lynlab.co.kr
+    http:
+      paths:
+      - backend:
+          serviceName: auth
+          servicePort: 8080
+
+---
 apiVersion: v1
 kind: Service
 metadata:
@@ -35,6 +56,13 @@ spec:
       containers:
         - image: lynlab/auth:v2.0.1
           name: auth
+          resources:
+            requests:
+              memory: 50Mi
+              cpu: 100m
+            limits:
+              memory: 50Mi
+              cpu: 100m
           env:
             - name: DB_HOST
               value: postgres.lynlab

@@ -56,6 +56,13 @@ spec:
       containers:
         - image: lynlab/lynlab:v4.0.0
           name: lynlab
+          resources:
+            requests:
+              memory: 50Mi
+              cpu: 100m
+            limits:
+              memory: 50Mi
+              cpu: 100m
           env:
             - name: DB_HOST
               value: postgres.lynlab
@@ -72,6 +79,16 @@ spec:
               value: '5432'
             - name: LYNLAB_AUTH_HOST
               value: 'http://auth.lynlab:8080'
+            - name: GOOGLE_SERVICE_ACCOUNTS
+              valueFrom:
+                secretKeyRef:
+                  name: secrets
+                  key: GOOGLE_SERVICE_ACCOUNTS
+            - name: GOOGLE_ANALYTICS_VIEW_ID
+              valueFrom:
+                secretKeyRef:
+                  name: secrets
+                  key: GOOGLE_ANALYTICS_VIEW_ID
           ports:
             - containerPort: 1323
               name: lynlab-port

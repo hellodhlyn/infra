@@ -52,6 +52,13 @@ spec:
       containers:
       - image: postgres:9.6
         name: postgres
+        resources:
+          requests:
+            memory: 500Mi
+            cpu: 100m
+          limits:
+            memory: 500Mi
+            cpu: 100m
         env:
         - name: POSTGRES_PASSWORD
           valueFrom:
