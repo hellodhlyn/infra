@@ -46,6 +46,8 @@ kubectl() {
 }
 
 export_function kubectl
+
+export SOPS_PGP_FP="1d1a32d148edf1e8a536f7a08a82a50a2df52ee4"
 EOL
 
 direnv allow
