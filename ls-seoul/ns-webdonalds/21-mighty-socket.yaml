@@ -54,7 +54,7 @@ spec:
         app: mighty-socket
     spec:
       containers:
-      - image: hellodhlyn/mighty-server:v0.3.2
+      - image: hellodhlyn/mighty-server:v0.4.0-a1
         name: mighty-socket
         env:
         - name: NODE_ENV
