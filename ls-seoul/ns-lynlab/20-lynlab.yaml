@@ -54,7 +54,7 @@ spec:
         app: lynlab
     spec:
       containers:
-        - image: lynlab/lynlab:v4.0.0
+        - image: lynlab/lynlab:v4.1.1
           name: lynlab
           resources:
             requests:
@@ -84,11 +84,6 @@ spec:
                 secretKeyRef:
                   name: secrets
                   key: GOOGLE_SERVICE_ACCOUNTS
-            - name: GOOGLE_ANALYTICS_VIEW_ID
-              valueFrom:
-                secretKeyRef:
-                  name: secrets
-                  key: GOOGLE_ANALYTICS_VIEW_ID
           ports:
             - containerPort: 1323
               name: lynlab-port

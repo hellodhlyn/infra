@@ -1,0 +1,60 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: hosting
+  namespace: luppiter
+  labels:
+    name: hosting
+spec:
+  type: LoadBalancer
+  selector:
+    name: hosting
+  ports:
+  - port: 443
+    targetPort: 8443
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hosting
+  namespace: luppiter
+  labels:
+    name: hosting
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: hosting
+  template:
+    metadata:
+      labels:
+        name: hosting
+    spec:
+      containers:
+      - image: hellodhlyn/luppiter-hosting:v1.0.0
+        name: hosting
+        resources:
+          requests:
+            memory: 50Mi
+            cpu: 50m
+          limits:
+            memory: 50Mi
+            cpu: 50m
+        env:
+          - name: DB_HOST
+            value: postgres.lynlab
+          - name: DB_PORT
+            value: '5432'
+          - name: DB_USERNAME
+            value: luppiter_user
+          - name: DB_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: secrets
+                key: DB_PASSWORD
+          - name: DB_NAME
+            value: luppiter
+          - name: LUPPITER_REMOTE_HOST
+            value: http://luppiter.luppiter:8080

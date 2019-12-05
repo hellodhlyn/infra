@@ -21,3 +21,9 @@ kind: Namespace
 apiVersion: v1
 metadata:
   name: undersky
+
+---
+kind: Namespace
+apiVersion: v1
+metadata:
+  name: luppiter
