@@ -54,7 +54,7 @@ spec:
         app: web
     spec:
       containers:
-      - image: lynlab/lynlab-web:v1.5.0
+      - image: lynlab/lynlab-web:v1.6.1
         name: lynlab-web
         resources:
           requests:

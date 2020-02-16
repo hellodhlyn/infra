@@ -54,7 +54,8 @@ spec:
         name: luppiter
     spec:
       containers:
-      - image: lynlab/luppiter:v1.3.0
+      - image: lynlab/luppiter:v2.0.0-rc1
+        imagePullPolicy: Always
         name: luppiter
         resources:
           requests:
