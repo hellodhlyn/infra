@@ -54,7 +54,7 @@ spec:
         app: cms
     spec:
       containers:
-      - image: lynlab/lynlab:v5.1.0
+      - image: lynlab/lynlab:v5.2.0
         name: cms
         resources:
           requests:

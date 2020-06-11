@@ -54,7 +54,7 @@ spec:
         app: wiki
     spec:
       containers:
-      - image: hellodhlyn/shiori:v0.0.1
+      - image: hellodhlyn/shiori:v0.1.0
         name: wiki
         resources:
           requests:

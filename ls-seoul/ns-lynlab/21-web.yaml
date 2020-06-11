@@ -54,7 +54,7 @@ spec:
         app: web
     spec:
       containers:
-      - image: lynlab/lynlab-web:v1.10.0
+      - image: lynlab/lynlab-web:v1.10.5
         name: lynlab-web
         resources:
           requests:
@@ -66,6 +66,16 @@ spec:
         ports:
         - containerPort: 8080
           name: web-port
+        livenessProbe:
+          httpGet:
+            path: /
+            port: web-port
+          initialDelaySeconds: 120
+        readinessProbe:
+          httpGet:
+            path: /
+            port: web-port
+          initialDelaySeconds: 120
         env:
         - name: BASIC_AUTH_USERNAME
           value: hellodhlyn
