@@ -1,0 +1,44 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webdo-bot
+  namespace: webdonalds
+  labels:
+    app: webdo-bot
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: webdo-bot
+  template:
+    metadata:
+      labels:
+        app: webdo-bot
+    spec:
+      containers:
+      - image: webdonalds/discord-bot:v0.3.0
+        name: webdo-bot
+        resources:
+          requests:
+            memory: 100Mi
+            cpu: 100m
+          limits:
+            memory: 100Mi
+            cpu: 100m
+        env:
+        - name: DISCORD_BOT_TOKEN
+          value: NzExNTI1MTMwNjE0MDc5NDg5.XuTXeA.xs2PDfopjTcqEb3sPua2GvfA7PM
+        - name: WAQI_API_TOKEN
+          value: e57c3c4ac8ee22c0948965d7daaaa64e37da8589
+        - name: BREAKING_NEWS_CHANNEL_ID
+          value: '736110542715879487'
+        - name: TWITTER_CONSUMER_KEY
+          value: GydfNFuXlYnM7KBpPPjBfeXBp
+        - name: TWITTER_CONSUMER_SECRET
+          value: yzPfNvQvBL4QfOq5OWYYIgGnNNlfzC4tVVeKZ95cxuu2gGYStE
+        - name: TWITTER_ACCESS_TOKEN
+          value: 2336517402-wFSo4NeyTXIdGTkVQIXw6WtbZ3bSyNFt3hhzdnh
+        - name: TWITTER_ACCESS_SECRET
+          value: YwydShraMM5mETvV6xmTwXl1B6K9b3ShocEkgWkQFE4z7
+

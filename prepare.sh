@@ -1,9 +1,9 @@
 #!/bin/sh
 
-if [ ! -f "./.bin/k3s" ]; then
+if [ ! -f "./.bin/kubectl" ]; then
   mkdir -p ./.bin
-  curl -L https://github.com/rancher/k3s/releases/download/v0.8.1/k3s -o ./.bin/k3s
-  chmod +x ./.bin/k3s
+  curl -L https://storage.googleapis.com/kubernetes-release/release/`curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt`/bin/linux/amd64/kubectl -o ./.bin/kubectl
+  chmod +x ./.bin/kubectl
 fi
 
 cat > ./.envrc <<'EOL'
@@ -42,7 +42,7 @@ kubectl() {
     ns="default"
   fi
 
-  $bin_path/.bin/k3s kubectl --kubeconfig=$cfg_path/kubeconfig --namespace=${ns/ns-/} $*
+  $bin_path/.bin/kubectl --kubeconfig=$cfg_path/kubeconfig --namespace=${ns/ns-/} $*
 }
 
 export_function kubectl
