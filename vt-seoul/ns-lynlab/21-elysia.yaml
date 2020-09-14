@@ -64,11 +64,11 @@ spec:
             memory: 150Mi
             cpu: 100m
         env:
-          - name: ELYSIA_CORS_ORIGIN
-            value: https://lynlab.co.kr
+        - name: ELYSIA_CORS_ORIGIN
+          value: https://lynlab.co.kr
         ports:
-          - containerPort: 3000
-            name: elysia-port
+        - containerPort: 3000
+          name: elysia-port
         livenessProbe:
           httpGet:
             path: /ping

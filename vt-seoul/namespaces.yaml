@@ -2,6 +2,12 @@
 kind: Namespace
 apiVersion: v1
 metadata:
+  name: luppiter
+
+---
+kind: Namespace
+apiVersion: v1
+metadata:
   name: lynlab
 
 ---
