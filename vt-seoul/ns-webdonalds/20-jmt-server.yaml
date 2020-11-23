@@ -1,0 +1,65 @@
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: jmt-server
+  namespace: webdonalds
+  annotations:
+    kubernetes.io/ingress.class: traefik
+spec:
+  tls:
+  - hosts:
+    - jmt.webdonalds.org
+    secretName: tls-certs
+  rules:
+  - host: jmt.webdonalds.org
+    http:
+      paths:
+      - backend:
+          serviceName: jmt-server
+          servicePort: 8080
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: jmt-server
+  namespace: webdonalds
+  labels:
+    app: jmt-server
+spec:
+  type: NodePort
+  selector:
+    app: jmt-server
+  ports:
+  - port: 8080
+    targetPort: 8080
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: jmt-server
+  namespace: webdonalds
+  labels:
+    app: jmt-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: jmt-server
+  template:
+    metadata:
+      labels:
+        app: jmt-server
+    spec:
+      containers:
+      - image: ghcr.io/webdonalds/jmt-server:v0.0.1
+        name: jmt-server
+        resources:
+          requests:
+            memory: 50Mi
+            cpu: 50m
+          limits:
+            memory: 100Mi
+            cpu: 100m
