@@ -17,7 +17,7 @@ spec:
         app: webdo-bot
     spec:
       containers:
-      - image: webdonalds/discord-bot:v0.6.0
+      - image: webdonalds/discord-bot:v0.7.2
         name: webdo-bot
         resources:
           requests:
