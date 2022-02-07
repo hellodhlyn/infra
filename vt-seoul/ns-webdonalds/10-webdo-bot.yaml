@@ -17,7 +17,7 @@ spec:
         app: webdo-bot
     spec:
       containers:
-      - image: webdonalds/discord-bot:v0.7.2
+      - image: webdonalds/discord-bot:v0.8.0
         name: webdo-bot
         resources:
           requests:
@@ -33,6 +33,8 @@ spec:
           value: '736110542715879487'
         - name: DEV_ARTICLE_CHANNEL_ID
           value: '785825929007595540'
+        - name: MOLLU_CHANNEL_ID
+          value: '909388797018505257'
         - name: ERROR_LOG_WEBHOOK_URL
           value: https://discordapp.com/api/webhooks/765583161290784769/CS1Hp0h1PzsKF1ZKMmtYhrg3cUAvmAFpW-9Hsq_yreO323NKNelU_AWqpdKk18mIJC_1
         - name: REDIS_URL
