@@ -1,8 +1,17 @@
 #!/bin/sh
 
 if [ ! -f "./.bin/kubectl" ]; then
+  case "$OSTYPE" in
+    darwin*) os="darwin" ;;
+    *)       os="linux"  ;;
+  esac
+  case $(uname -m) in
+    arm64) arch="arm64" ;;
+    *)     arch="amd64" ;;
+  esac
+
   mkdir -p ./.bin
-  curl -L https://storage.googleapis.com/kubernetes-release/release/`curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt`/bin/linux/amd64/kubectl -o ./.bin/kubectl
+  curl -L https://storage.googleapis.com/kubernetes-release/release/`curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt`/bin/$os/$arch/kubectl -o ./.bin/kubectl
   chmod +x ./.bin/kubectl
 fi
 
