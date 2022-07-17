@@ -4,5 +4,6 @@
 .bin/
 
 **/*.secure.yaml
+**/*.sec.yaml
 **/kubeconfig
 

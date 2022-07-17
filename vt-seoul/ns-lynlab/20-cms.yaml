@@ -33,7 +33,7 @@ spec:
     app: cms
   ports:
   - port: 8080
-    targetPort: 1337
+    targetPort: 3000
 
 ---
 apiVersion: apps/v1
@@ -54,41 +54,37 @@ spec:
         app: cms
     spec:
       containers:
-      - image: lynlab/lynlab:v5.2.0
+      - image: ghcr.io/hellodhlyn/shiori:v1.0.1
         name: cms
         resources:
           requests:
             memory: 200Mi
-            cpu: 200m
+            cpu: 100m
           limits:
             memory: 200Mi
             cpu: 200m
         env:
-        - name: DB_HOST
-          value: '10.34.96.3'
-        - name: DB_PORT
+        - name: RAILS_ENV
+          value: production
+        - name: SHIORI_DATABASE_HOST
+          value: 10.34.96.3
+        - name: SHIORI_DATABASE_PORT
           value: '5432'
-        - name: DB_NAME
-          value: lynlab_cms
-        - name: DB_USERNAME
+        - name: SHIORI_DATABASE_USERNAME
           value: lynlab_user
-        - name: DB_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: secrets
-              key: DB_PASSWORD
-        - name: CORS_ORIGINS
-          value: 'https://cms.lynlab.co.kr,https://lynlab.co.kr,http://127.0.0.1:3000'
+        envFrom:
+        - secretRef:
+            name: secrets
         ports:
-        - containerPort: 1337
+        - containerPort: 3000
           name: cms-port
         livenessProbe:
           httpGet:
-            path: /
+            path: /ping
             port: cms-port
           initialDelaySeconds: 60
         readinessProbe:
           httpGet:
-            path: /
+            path: /ping
             port: cms-port
           initialDelaySeconds: 60
