@@ -58,7 +58,7 @@ spec:
         name: auth
     spec:
       containers:
-        - image: ghcr.io/hellodhlyn/lynlab-auth:v1.1.0
+        - image: ghcr.io/hellodhlyn/lynlab-auth:v1.2.0
           name: auth
           resources:
             limits:
@@ -68,9 +68,9 @@ spec:
             - name: REDIS_ENDPOINT
               value: vt-db01.vke-seoul.lynlab.co.kr:6379
             - name: RELYING_PARTY_ID
-              value: localhost
+              value: lynlab.co.kr
             - name: RELYING_PARTY_ORIGIN
-              value: http://localhost:8787
+              value: https://lynlab.co.kr
           envFrom:
             - secretRef:
                 name: auth-secrets
