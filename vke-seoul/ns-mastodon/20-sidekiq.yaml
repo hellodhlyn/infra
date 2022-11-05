@@ -1,0 +1,35 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sidekiq
+  namespace: mastodon
+  labels:
+    app: sidekiq
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: sidekiq
+  template:
+    metadata:
+      labels:
+        app: sidekiq
+    spec:
+      containers:
+        - image: tootsuite/mastodon:v3.5.3
+          name: sidekiq
+          command: ["bash"]
+          args: ["-c", "bundle exec sidekiq"]
+          resources:
+            requests:
+              memory: 512Mi
+              cpu: 50m
+            limits:
+              memory: 512Mi
+              cpu: 500m
+          envFrom:
+            - configMapRef:
+                name: mastodon-envs
+            - secretRef:
+                name: mastodon-secrets
