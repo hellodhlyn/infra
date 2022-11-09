@@ -3,7 +3,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: sidekiq
-  namespace: mastodon
+  namespace: dodam-io
   labels:
     app: sidekiq
 spec:

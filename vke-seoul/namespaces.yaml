@@ -10,3 +10,8 @@ apiVersion: v1
 metadata:
   name: mastodon
 
+---
+kind: Namespace
+apiVersion: v1
+metadata:
+  name: dodam-io
