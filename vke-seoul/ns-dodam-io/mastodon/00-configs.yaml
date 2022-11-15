@@ -5,6 +5,7 @@ metadata:
   name: mastodon-envs
   namespace: dodam-io
 data:
+  RAILS_ENV: production
   LOCAL_DOMAIN: dodam.io
   DEFAULT_LOCALE: ko
 
@@ -22,7 +23,7 @@ data:
   # SMTP
   SMTP_SERVER: smtp.sendgrid.net
   SMTP_PORT: '587'
-  SMTP_LOGIN: apikey 
+  SMTP_LOGIN: apikey
   SMTP_FROM_ADDRESS: noreply@em7861.dodam.io
 
   # WebPush
@@ -30,8 +31,7 @@ data:
 
   # External storage
   S3_ENABLED: 'true'
-  S3_BUCKET: media-mastodon-dodam-io
-  S3_HOSTNAME: media.mastodon.dodam.io
-  S3_PERMISSION: private
-  S3_ALIAS_HOST: media.mastodon.dodam.io
-  AWS_ACCESS_KEY_ID: 96bf138fb2b9a62ee15c4a4f7e86fe86
+  S3_REGION: ap-northeast-2
+  S3_BUCKET: mastodon.storage.dodam.io
+  S3_ALIAS_HOST: mastodon.storage.dodam.io 
+  AWS_ACCESS_KEY_ID: AKIATJCB2NLQYVZTZT77

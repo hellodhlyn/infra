@@ -7,7 +7,6 @@ metadata:
   labels:
     app: sidekiq
 spec:
-  replicas: 1
   selector:
     matchLabels:
       app: sidekiq
@@ -17,19 +16,26 @@ spec:
         app: sidekiq
     spec:
       containers:
-        - image: tootsuite/mastodon:v3.5.3
+        - image: tootsuite/mastodon:v4.0.2
           name: sidekiq
           command: ["bash"]
           args: ["-c", "bundle exec sidekiq"]
           resources:
             requests:
-              memory: 512Mi
-              cpu: 50m
+              memory: 368Mi
+              cpu: 200m
             limits:
-              memory: 512Mi
-              cpu: 500m
+              memory: 1024Mi
+              cpu: 2000m
           envFrom:
             - configMapRef:
                 name: mastodon-envs
             - secretRef:
                 name: mastodon-secrets
+      topologySpreadConstraints:
+        - maxSkew: 1
+          topologyKey: kubernetes.io/hostname
+          whenUnsatisfiable: DoNotSchedule
+          labelSelector:
+            matchLabels:
+              app: sidekiq

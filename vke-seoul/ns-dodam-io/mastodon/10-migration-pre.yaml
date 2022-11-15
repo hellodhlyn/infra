@@ -1,0 +1,30 @@
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: migration-4.0.2-pre
+  namespace: dodam-io
+spec:
+  template:
+    spec:
+      containers:
+        - image: tootsuite/mastodon:v4.0.2
+          name: migration
+          command: ["bash"]
+          args: ["-c", "bundle exec rails db:migrate"]
+          resources:
+            requests:
+              memory: 256Mi
+              cpu: 200m
+            limits:
+              memory: 256Mi
+              cpu: 1000m
+          envFrom:
+            - configMapRef:
+                name: mastodon-envs
+            - secretRef:
+                name: mastodon-secrets
+          env:
+            - name: SKIP_POST_DEPLOYMENT_MIGRATIONS
+              value: 'true'
+      restartPolicy: Never

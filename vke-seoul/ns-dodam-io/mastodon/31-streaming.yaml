@@ -23,7 +23,6 @@ metadata:
   labels:
     app: streaming
 spec:
-  replicas: 1
   selector:
     matchLabels:
       app: streaming
@@ -33,17 +32,17 @@ spec:
         app: streaming
     spec:
       containers:
-        - image: tootsuite/mastodon:v3.5.3
+        - image: tootsuite/mastodon:v4.0.2
           name: streaming
           command: ["node"]
           args: ["./streaming"]
           resources:
             requests:
               memory: 128Mi
-              cpu: 100m
+              cpu: 200m
             limits:
               memory: 128Mi
-              cpu: 500m
+              cpu: 1000m
           envFrom:
             - configMapRef:
                 name: mastodon-envs
@@ -64,3 +63,10 @@ spec:
               port: streaming-port
             failureThreshold: 2
             periodSeconds: 60
+      topologySpreadConstraints:
+        - maxSkew: 1
+          topologyKey: kubernetes.io/hostname
+          whenUnsatisfiable: DoNotSchedule
+          labelSelector:
+            matchLabels:
+              app: streaming

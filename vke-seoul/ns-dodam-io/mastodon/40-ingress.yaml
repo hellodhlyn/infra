@@ -1,5 +1,5 @@
 ---
-apiVersion: networking.k8s.io/v1 
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: web
@@ -12,7 +12,7 @@ spec:
         - dodam.io
       secretName: dodam-io-certs
   rules:
-    - host: dodam.io 
+    - host: dodam.io
       http:
         paths:
           - path: /api/v1/streaming
@@ -27,6 +27,38 @@ spec:
             backend:
               service:
                 name: web
+                port:
+                  number: 3000
+
+---
+apiVersion: networking.k8s.io/v1 
+kind: Ingress
+metadata:
+  name: web-staging
+  namespace: dodam-io
+  annotations:
+    kubernetes.io/ingress.class: nginx
+spec:
+  tls:
+    - hosts:
+        - staging.dodam.io
+      secretName: dodam-io-certs
+  rules:
+    - host: staging.dodam.io 
+      http:
+        paths:
+          - path: /api/v1/streaming
+            pathType: Prefix
+            backend:
+              service:
+                name: streaming
+                port:
+                  number: 4000
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: web-staging
                 port:
                   number: 3000
 
