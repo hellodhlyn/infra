@@ -22,11 +22,11 @@ spec:
           args: ["-c", "bundle exec sidekiq"]
           resources:
             requests:
-              memory: 368Mi
-              cpu: 200m
+              memory: 1024Mi
+              cpu: 500m
             limits:
               memory: 1024Mi
-              cpu: 2000m
+              cpu: 1000m
           envFrom:
             - configMapRef:
                 name: mastodon-envs
