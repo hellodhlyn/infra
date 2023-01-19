@@ -32,7 +32,7 @@ spec:
         app: streaming
     spec:
       containers:
-        - image: tootsuite/mastodon:v4.0.2
+        - image: ghcr.io/dodam-io/mastodon:v4.0.2-dodam2
           name: streaming
           command: ["node"]
           args: ["./streaming"]
