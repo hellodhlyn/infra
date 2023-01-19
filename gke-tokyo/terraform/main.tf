@@ -10,3 +10,8 @@ locals {
 }
 
 data "google_client_config" "default" {}
+
+data "google_compute_zones" "available" {
+  project = var.project_id
+  region  = var.region
+}

@@ -16,4 +16,6 @@ module "gke" {
 
   release_channel                 = "REGULAR"
   enable_vertical_pod_autoscaling = true
+
+  datapath_provider = "ADVANCED_DATAPATH"
 }

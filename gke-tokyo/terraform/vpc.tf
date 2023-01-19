@@ -7,9 +7,10 @@ module "vpc" {
 
   subnets = [
     {
-      subnet_name   = local.subnet_name
-      subnet_ip     = "10.0.0.0/17"
-      subnet_region = var.region
+      subnet_name           = local.subnet_name
+      subnet_ip             = "10.0.0.0/17"
+      subnet_region         = var.region
+      subnet_private_access = true
     }
   ]
 
