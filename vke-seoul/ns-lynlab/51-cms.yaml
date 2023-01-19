@@ -58,7 +58,7 @@ spec:
         app: cms
     spec:
       containers:
-        - image: ghcr.io/hellodhlyn/shiori:v1.1.1
+        - image: ghcr.io/hellodhlyn/shiori:v1.1.2
           name: cms
           resources:
             requests:
