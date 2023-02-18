@@ -1,0 +1,24 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: shiori
+  namespace: shiori
+  annotations:
+    kubernetes.io/ingress.class: "gce"
+spec:
+  tls:
+    - hosts:
+        - cms.lynlab.co.kr
+      secretName: tls-certs-lynlab-co-kr
+  rules:
+    - host: cms.lynlab.co.kr
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: api-server
+                port:
+                  number: 3000

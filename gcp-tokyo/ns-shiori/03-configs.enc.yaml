@@ -1,0 +1,9 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: shiori-configs
+  namespace: shiori
+data:
+  RAILS_ENV: production
+
