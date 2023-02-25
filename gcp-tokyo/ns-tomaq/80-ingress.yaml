@@ -1,0 +1,24 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: tomaq-io
+  namespace: tomaq
+  annotations:
+    kubernetes.io/ingress.class: "gce"
+spec:
+  tls:
+    - hosts:
+        - cms.tomaq.io
+      secretName: tls-certs-tomaq-io
+  rules:
+    - host: cms.tomaq.io
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: api-server
+                port:
+                  number: 3000

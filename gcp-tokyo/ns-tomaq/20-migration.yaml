@@ -1,0 +1,26 @@
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: migration
+  namespace: tomaq
+  labels:
+    app: migration
+spec:
+  template:
+    metadata:
+      labels:
+        app: migration
+    spec:
+      nodeSelector:
+        cloud.google.com/gke-spot: "true"
+      containers:
+        - image: ghcr.io/hellodhlyn/shiori:v1.3.1
+          name: migration
+          command: [ "bundle", "exec", "rails", "db:migrate" ]
+          envFrom:
+            - configMapRef:
+                name: tomaq-configs
+            - secretRef:
+                name: tomaq-secrets
+      restartPolicy: Never

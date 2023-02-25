@@ -1,0 +1,8 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: tomaq-configs
+  namespace: tomaq
+data:
+  RAILS_ENV: production
