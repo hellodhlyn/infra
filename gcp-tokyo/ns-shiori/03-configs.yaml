@@ -6,4 +6,5 @@ metadata:
   namespace: shiori
 data:
   RAILS_ENV: production
-
+  NEW_RELIC_APP_NAME: "Shiori CMS"
+  NEW_RELIC_AGENT_ENABLED: "true"

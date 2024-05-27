@@ -36,7 +36,7 @@ spec:
         cloud.google.com/gke-spot: "true"
       terminationGracePeriodSeconds: 25
       containers:
-        - image: ghcr.io/hellodhlyn/shiori:v1.3.0
+        - image: ghcr.io/hellodhlyn/shiori:v1.7.0
           name: api-server
           resources:
             requests:
@@ -45,10 +45,9 @@ spec:
             limits:
               cpu: 250m
               memory: 500Mi
-          env:
-            - name: RAILS_ENV
-              value: production
           envFrom:
+            - configMapRef:
+                name: shiori-configs
             - secretRef:
                 name: shiori-secrets
             - secretRef:

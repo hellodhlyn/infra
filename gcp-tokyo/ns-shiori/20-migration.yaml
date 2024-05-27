@@ -15,13 +15,12 @@ spec:
       nodeSelector:
         cloud.google.com/gke-spot: "true"
       containers:
-        - image: ghcr.io/hellodhlyn/shiori:v1.3.0
+        - image: ghcr.io/hellodhlyn/shiori:v1.7.0
           name: migration
           command: [ "bundle", "exec", "rails", "db:migrate" ]
-          env:
-            - name: RAILS_ENV
-              value: production
           envFrom:
+            - configMapRef:
+                name: shiori-configs
             - secretRef:
                 name: shiori-secrets
             - secretRef:
