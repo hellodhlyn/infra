@@ -15,6 +15,22 @@ spec:
       targetPort: 3000
 
 ---
+apiVersion: networking.gke.io/v1
+kind: HealthCheckPolicy
+metadata:
+  name: api-server
+spec:
+  default:
+    config:
+      type: HTTP
+      httpHealthCheck:
+        requestPath: /ping
+  targetRef:
+    group: ""
+    kind: Service
+    name: api-server
+
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
