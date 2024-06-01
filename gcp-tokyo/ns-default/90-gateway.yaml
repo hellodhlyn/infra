@@ -6,8 +6,9 @@ metadata:
 spec:
   gatewayClassName: gke-l7-global-external-managed
   listeners:
-  - name: https
+  - name: lynlab-co-kr
     protocol: HTTPS
+    hostname: '*.lynlab.co.kr'
     port: 443
     allowedRoutes:
       namespaces:
@@ -16,3 +17,14 @@ spec:
       mode: Terminate
       options:
         networking.gke.io/pre-shared-certs: lynlab-co-kr-cloudflare-origin
+  - name: mollulog-net
+    protocol: HTTPS
+    hostname: '*.mollulog.net'
+    port: 443
+    allowedRoutes:
+      namespaces:
+        from: All
+    tls:
+      mode: Terminate
+      options:
+        networking.gke.io/pre-shared-certs: mollulog-net-cloudflare-origin

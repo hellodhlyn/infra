@@ -1,0 +1,8 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: baql-configs
+  namespace: baql
+data:
+  RAILS_ENV: production
