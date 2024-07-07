@@ -1,0 +1,35 @@
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: sync-job
+spec:
+  schedule: "0 * * * *"  # @hourly
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          nodeSelector:
+            cloud.google.com/gke-spot: "true"
+          terminationGracePeriodSeconds: 25
+          containers:
+          - image: ghcr.io/hellodhlyn/baql:v0.1.2
+            name: sync-job
+            command: [ "bundle" ]
+            args: [ "exec", "rake", "sync:all" ]
+            resources:
+              requests:
+                cpu: 250m
+                memory: 512Mi
+              limits:
+                cpu: 250m
+                memory: 512Mi
+            envFrom:
+            - configMapRef:
+                name: baql-configs
+            - secretRef:
+                name: baql-secrets
+          restartPolicy: Never
+      backoffLimit: 3
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 3

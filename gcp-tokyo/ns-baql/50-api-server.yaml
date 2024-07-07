@@ -52,31 +52,30 @@ spec:
         cloud.google.com/gke-spot: "true"
       terminationGracePeriodSeconds: 25
       containers:
-        - image: ghcr.io/hellodhlyn/baql:latest
-          imagePullPolicy: Always
-          name: api-server
-          resources:
-            requests:
-              cpu: 250m
-              memory: 500Mi
-            limits:
-              cpu: 250m
-              memory: 500Mi
-          envFrom:
-          - configMapRef:
-              name: baql-configs
-          - secretRef:
-              name: baql-secrets
-          ports:
-          - containerPort: 3000
-            name: api-server-port
-          livenessProbe:
-            httpGet:
-              path: /up
-              port: api-server-port
-            initialDelaySeconds: 30
-          readinessProbe:
-            httpGet:
-              path: /up
-              port: api-server-port
-            initialDelaySeconds: 30
+      - name: api-server
+        image: ghcr.io/hellodhlyn/baql:v0.1.2
+        resources:
+          requests:
+            cpu: 250m
+            memory: 500Mi
+          limits:
+            cpu: 250m
+            memory: 500Mi
+        envFrom:
+        - configMapRef:
+            name: baql-configs
+        - secretRef:
+            name: baql-secrets
+        ports:
+        - containerPort: 3000
+          name: api-server-port
+        livenessProbe:
+          httpGet:
+            path: /up
+            port: api-server-port
+          initialDelaySeconds: 30
+        readinessProbe:
+          httpGet:
+            path: /up
+            port: api-server-port
+          initialDelaySeconds: 30
