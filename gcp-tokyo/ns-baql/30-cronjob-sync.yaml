@@ -13,7 +13,7 @@ spec:
             cloud.google.com/gke-spot: "true"
           terminationGracePeriodSeconds: 25
           containers:
-          - image: ghcr.io/hellodhlyn/baql:v0.1.2
+          - image: ghcr.io/hellodhlyn/baql:v0.5.2
             name: sync-job
             command: [ "bundle" ]
             args: [ "exec", "rake", "sync:all" ]
