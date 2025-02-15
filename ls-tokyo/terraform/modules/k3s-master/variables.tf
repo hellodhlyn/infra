@@ -2,6 +2,10 @@ variable "node_name" {
   type = string
 }
 
+variable "aws_availability_zone" {
+  type = string
+}
+
 variable "cloudflare_api_token" {
   type      = string
   sensitive = true

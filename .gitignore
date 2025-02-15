@@ -12,3 +12,4 @@
 
 **/*.tfstate
 **/*.tfstate.*
+**/*.tfvars

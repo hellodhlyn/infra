@@ -15,7 +15,7 @@ provider "cloudflare" {
 // AWS Lightsail instance
 resource "aws_lightsail_instance" "lightsail_instance" {
   name              = var.node_name
-  availability_zone = "ap-northeast-1a"
+  availability_zone = var.aws_availability_zone
   blueprint_id      = "debian_12"
   bundle_id         = "small_3_0"
   ip_address_type   = "dualstack"
@@ -45,13 +45,13 @@ resource "aws_lightsail_static_ip_attachment" "static-ip-v4" {
   static_ip_name = aws_lightsail_static_ip.static-ip-v4.name
 }
 
-resource "aws_lightsail_instance_public_ports" "public-port-6443" {
+resource "aws_lightsail_instance_public_ports" "public-port-443" {
   instance_name = aws_lightsail_instance.lightsail_instance.name
 
   port_info {
     protocol  = "tcp"
-    from_port = 6443
-    to_port   = 6443
+    from_port = 443
+    to_port   = 443
     cidrs = [
       "0.0.0.0/0"
     ]
@@ -62,11 +62,21 @@ resource "aws_lightsail_instance_public_ports" "public-port-6443" {
 }
 
 // Cloudflare DNS records
+resource "cloudflare_dns_record" "dns-record-ipv4" {
+  zone_id = var.cloudflare_zone_id
+  comment = var.node_name
+  content = aws_lightsail_static_ip.static-ip-v4.ip_address
+  name    = "${var.node_name}.master.lynlab.cc"
+  proxied = true
+  ttl     = 1
+  type    = "A"
+}
+
 resource "cloudflare_dns_record" "dns-record-ipv6" {
   zone_id = var.cloudflare_zone_id
   comment = var.node_name
   content = aws_lightsail_instance.lightsail_instance.ipv6_addresses[0]
-  name    = "${var.node_name}.node.lynlab.cc"
+  name    = "${var.node_name}.master.lynlab.cc"
   proxied = true
   ttl     = 1
   type    = "AAAA"
