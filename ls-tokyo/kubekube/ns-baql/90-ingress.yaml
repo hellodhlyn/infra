@@ -1,0 +1,23 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: api-server
+  namespace: baql
+spec:
+  ingressClassName: traefik
+  rules:
+    - host: baql.mollulog.net
+      http:
+        paths:
+          - path: /graphql
+            pathType: Prefix
+            backend:
+              service:
+                name: api-server
+                port:
+                  number: 3000
+  tls:
+    - secretName: baql-tls
+      hosts:
+        - baql.mollulog.net

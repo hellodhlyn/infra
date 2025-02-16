@@ -18,7 +18,7 @@ resource "aws_lightsail_instance" "lightsail_instance" {
   availability_zone = var.aws_availability_zone
   blueprint_id      = "debian_12"
   bundle_id         = "small_3_0"
-  ip_address_type   = "dualstack"
+  ip_address_type   = "ipv4"
 
   key_pair_name  = "ls-tokyo"
   user_data      = templatefile("${path.module}/node-init.sh", { NODE_NAME = var.node_name })
@@ -55,9 +55,6 @@ resource "aws_lightsail_instance_public_ports" "public-port-443" {
     cidrs = [
       "0.0.0.0/0"
     ]
-    ipv6_cidrs = [
-      "::/0"
-    ]
   }
 }
 
@@ -66,18 +63,8 @@ resource "cloudflare_dns_record" "dns-record-ipv4" {
   zone_id = var.cloudflare_zone_id
   comment = var.node_name
   content = aws_lightsail_static_ip.static-ip-v4.ip_address
-  name    = "${var.node_name}.master.lynlab.cc"
+  name    = "${var.node_name}.node.lynlab.cc"
   proxied = true
   ttl     = 1
   type    = "A"
-}
-
-resource "cloudflare_dns_record" "dns-record-ipv6" {
-  zone_id = var.cloudflare_zone_id
-  comment = var.node_name
-  content = aws_lightsail_instance.lightsail_instance.ipv6_addresses[0]
-  name    = "${var.node_name}.master.lynlab.cc"
-  proxied = true
-  ttl     = 1
-  type    = "AAAA"
 }

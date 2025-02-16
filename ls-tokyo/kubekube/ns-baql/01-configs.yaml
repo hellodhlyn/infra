@@ -1,0 +1,10 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: baql-config
+  namespace: baql
+data:
+  RAILS_ENV: production
+  NEW_RELIC_AGENT_ENABLED: "true"
+  NEW_RELIC_RULES_IGNORE_URL_REGEXES: "/up"

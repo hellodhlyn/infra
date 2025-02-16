@@ -18,10 +18,12 @@ variable "k3s_token" {
   sensitive = true
 }
 
-module "node-ls-tokyo-k3s-master01" {
-  source = "./modules/k3s-master"
 
-  node_name             = "ls-tokyo-k3s-master01"
+// K3s cluster
+module "node-ls-tokyo-k3s-server01" {
+  source = "./modules/k3s-server"
+
+  node_name             = "ls-tokyo-k3s-server01"
   aws_availability_zone = "ap-northeast-1a"
   cloudflare_api_token  = var.cloudflare_api_token
   cloudflare_zone_id    = var.cloudflare_zone_id
@@ -42,9 +44,9 @@ provider "cloudflare" {
   api_token = var.cloudflare_api_token
 }
 
-resource "cloudflare_dns_record" "cname-record-ls-tokyo-k3s-master01" {
+resource "cloudflare_dns_record" "cname-record-ls-tokyo-k3s-server01" {
   zone_id = var.cloudflare_zone_id
-  content = "ls-tokyo-k3s-master01.master.lynlab.cc"
+  content = "ls-tokyo-k3s-server01.node.lynlab.cc"
   name    = "ls-tokyo-k3s.cluster.lynlab.cc"
   proxied = true
   ttl     = 1

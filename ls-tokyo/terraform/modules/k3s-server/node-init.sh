@@ -24,5 +24,5 @@ apt install -y tailscale
 
 # Install k3s
 echo "*** Installing k3s server..."
-export INSTALL_K3S_EXEC="server --tls-san=${NODE_NAME}.master.lynlab.cc --cluster-cidr=10.42.0.0/16,2001:cafe:42::/56 --service-cidr=10.43.0.0/16,2001:cafe:43::/112"
+export INSTALL_K3S_EXEC="server --tls-san=${NODE_NAME}.internal.lynlab.cc"
 curl -sfL https://get.k3s.io | sh -
