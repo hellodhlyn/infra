@@ -32,10 +32,9 @@ spec:
       labels:
         app: api-server
     spec:
-      terminationGracePeriodSeconds: 25
       containers:
         - name: api-server
-          image: ghcr.io/hellodhlyn/baql:v0.6.0
+          image: ghcr.io/hellodhlyn/baql:v0.6.3
           resources:
             requests:
               cpu: 200m

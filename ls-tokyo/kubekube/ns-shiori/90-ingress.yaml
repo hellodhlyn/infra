@@ -3,21 +3,14 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: api-server
-  namespace: baql
+  namespace: shiori
 spec:
   ingressClassName: traefik
   rules:
-    - host: baql.mollulog.net
+    - host: cms.lynlab.co.kr
       http:
         paths:
           - path: /graphql
-            pathType: Exact
-            backend:
-              service:
-                name: api-server
-                port:
-                  number: 3000
-          - path: /images
             pathType: Prefix
             backend:
               service:
@@ -25,6 +18,6 @@ spec:
                 port:
                   number: 3000
   tls:
-    - secretName: baql-tls
+    - secretName: lynlab-co-kr-tls
       hosts:
-        - baql.mollulog.net
+        - cms.lynlab.co.kr

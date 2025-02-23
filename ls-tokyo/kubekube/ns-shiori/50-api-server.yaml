@@ -15,22 +15,6 @@ spec:
       targetPort: 3000
 
 ---
-apiVersion: networking.gke.io/v1
-kind: HealthCheckPolicy
-metadata:
-  name: api-server
-spec:
-  default:
-    config:
-      type: HTTP
-      httpHealthCheck:
-        requestPath: /ping
-  targetRef:
-    group: ""
-    kind: Service
-    name: api-server
-
----
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -48,19 +32,16 @@ spec:
       labels:
         app: api-server
     spec:
-      nodeSelector:
-        cloud.google.com/gke-spot: "true"
-      terminationGracePeriodSeconds: 25
       containers:
         - image: ghcr.io/hellodhlyn/shiori:v1.7.0
           name: api-server
           resources:
             requests:
-              cpu: 250m
-              memory: 500Mi
+              cpu: 200m
+              memory: 512Mi
             limits:
-              cpu: 250m
-              memory: 500Mi
+              cpu: 200m
+              memory: 512Mi
           envFrom:
             - configMapRef:
                 name: shiori-configs
