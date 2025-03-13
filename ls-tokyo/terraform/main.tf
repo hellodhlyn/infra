@@ -1,3 +1,23 @@
+terraform {
+  cloud {
+    organization = "hellodhlyn"
+    workspaces {
+      name = "ls-tokyo"
+    }
+  }
+
+  required_providers {
+    cloudflare = {
+      source  = "cloudflare/cloudflare"
+      version = "~> 5"
+    }
+  }
+}
+
+provider "cloudflare" {
+  api_token = var.cloudflare_api_token
+}
+
 variable "cloudflare_api_token" {
   type      = string
   sensitive = true
@@ -40,10 +60,6 @@ module "node-ls-tokyo-k3s-agent01" {
 
 
 // Cloudflare DNS records
-provider "cloudflare" {
-  api_token = var.cloudflare_api_token
-}
-
 resource "cloudflare_dns_record" "cname-record-ls-tokyo-k3s-server01" {
   zone_id = var.cloudflare_zone_id
   content = "ls-tokyo-k3s-server01.node.lynlab.cc"
