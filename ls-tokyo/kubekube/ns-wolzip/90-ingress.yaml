@@ -1,0 +1,23 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: hollo
+  namespace: wolzip
+spec:
+  ingressClassName: traefik
+  rules:
+    - host: social.wolzip.me
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: hollo
+                port:
+                  number: 3000
+  tls:
+    - secretName: wolzip-tls
+      hosts:
+        - social.wolzip.me
