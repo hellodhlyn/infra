@@ -34,7 +34,7 @@ spec:
     spec:
       containers:
         - name: hollo
-          image: ghcr.io/fedify-dev/hollo:0.5.4
+          image: ghcr.io/fedify-dev/hollo:0.5.5
           resources:
             requests:
               cpu: 200m
