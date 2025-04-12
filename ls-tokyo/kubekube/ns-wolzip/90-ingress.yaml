@@ -21,3 +21,27 @@ spec:
     - secretName: wolzip-tls
       hosts:
         - social.wolzip.me
+
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ato-server
+  namespace: wolzip
+spec:
+  ingressClassName: traefik
+  rules:
+    - host: ato.wolzip.me
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: ato-server
+                port:
+                  number: 8080
+  tls:
+    - secretName: wolzip-tls
+      hosts:
+        - ato.wolzip.me
