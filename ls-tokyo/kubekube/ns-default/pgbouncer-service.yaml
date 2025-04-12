@@ -1,0 +1,44 @@
+# kubectl port-forward deployment/pgbouncer 6432:6432
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pgbouncer
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pgbouncer
+  template:
+    metadata:
+      labels:
+        app: pgbouncer
+    spec:
+      containers:
+      - name: pgbouncer
+        image: edoburu/pgbouncer:v1.24.0-p1
+        ports:
+        - containerPort: 6432
+        volumeMounts:
+        - name: pgbouncer-config
+          mountPath: /etc/pgbouncer/pgbouncer.ini
+          subPath: pgbouncer.ini
+        - name: pgbouncer-auth
+          mountPath: /etc/pgbouncer/userlist.txt
+          subPath: userlist.txt
+        resources:
+          requests:
+            memory: "128Mi"
+            cpu: "100m"
+          limits:
+            memory: "256Mi"
+            cpu: "200m"
+      volumes:
+      - name: pgbouncer-config
+        secret:
+          secretName: pgbouncer-config
+      - name: pgbouncer-auth
+        secret:
+          secretName: pgbouncer-secret
