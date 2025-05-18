@@ -12,7 +12,7 @@ spec:
           terminationGracePeriodSeconds: 25
           containers:
             - name: sync-job
-              image: ghcr.io/hellodhlyn/baql:v0.6.3
+              image: ghcr.io/hellodhlyn/baql:v1.0.0-rc1
               command: [ "bundle" ]
               args: [ "exec", "rake", "sync:all" ]
               resources:
