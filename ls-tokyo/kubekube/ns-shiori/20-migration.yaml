@@ -12,8 +12,6 @@ spec:
       labels:
         app: migration
     spec:
-      nodeSelector:
-        cloud.google.com/gke-spot: "true"
       containers:
         - image: ghcr.io/hellodhlyn/shiori:v1.7.0
           name: migration
@@ -23,6 +21,4 @@ spec:
                 name: shiori-configs
             - secretRef:
                 name: shiori-secrets
-            - secretRef:
-                name: shiori-admin-credentials
       restartPolicy: Never

@@ -24,7 +24,18 @@ spec:
                 name: api-server
                 port:
                   number: 3000
+    - host: ranks.mollulog.net
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: rank-server
+                port:
+                  number: 8080
   tls:
     - secretName: baql-tls
       hosts:
         - baql.mollulog.net
+        - ranks.mollulog.net

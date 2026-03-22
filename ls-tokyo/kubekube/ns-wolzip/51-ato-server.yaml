@@ -10,7 +10,7 @@ spec:
   type: NodePort
   selector:
     app: ato-server
-  ports:
+  ports
     - port: 8080
       targetPort: 8080
 
@@ -32,9 +32,17 @@ spec:
       labels:
         app: ato-server
     spec:
+      initContainers:
+        - name: ato-migration
+          image: ghcr.io/hellodhlyn/ato:v0.1.1
+          command: ["/ato"]
+          args: ["db", "migrate"]
+          envFrom:
+            - secretRef:
+                name: ato-secret
       containers:
         - name: ato-server
-          image: ghcr.io/hellodhlyn/ato:v0.0.1
+          image: ghcr.io/hellodhlyn/ato:v0.1.1
           command: ["/ato"]
           args: ["server"]
           resources:

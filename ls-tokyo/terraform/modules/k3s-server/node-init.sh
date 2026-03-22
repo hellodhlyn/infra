@@ -24,5 +24,11 @@ apt install -y tailscale
 
 # Install k3s
 echo "*** Installing k3s server..."
-export INSTALL_K3S_EXEC="server --tls-san=${NODE_NAME}.internal.lynlab.cc"
+export TAILSCALE_IP=$(tailscale ip -4)
+export INSTALL_K3S_EXEC="server \
+  --tls-san ls-tokyo-k3s-server01.internal.lynlab.cc \
+  --node-ip $TAILSCALE_IP \
+  --advertise-address $TAILSCALE_IP \
+  --flannel-iface tailscale0
+  --flannel-conf '{\"Network\":\"10.42.0.0/16\", \"Backend\": {\"Type\": \"vxlan\", \"MTU\": 1280}}'"
 curl -sfL https://get.k3s.io | sh -

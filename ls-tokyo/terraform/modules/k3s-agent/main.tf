@@ -8,9 +8,10 @@ resource "aws_lightsail_instance" "lightsail_instance" {
 
   key_pair_name  = "ls-tokyo"
   user_data      = templatefile("${path.module}/node-init.sh", {
-    NODE_NAME     = var.node_name
-    K3S_SERVER_IP = var.k3s_server_ip
-    K3S_TOKEN     = var.k3s_token
+    NODE_NAME          = var.node_name
+    K3S_SERVER_HOST    = var.k3s_server_host
+    K3S_TOKEN          = var.k3s_token
+    TAILSCALE_AUTH_KEY = var.tailscale_auth_key
   })
 
   lifecycle {

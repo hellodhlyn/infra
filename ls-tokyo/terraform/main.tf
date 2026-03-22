@@ -28,12 +28,17 @@ variable "cloudflare_zone_id" {
   sensitive = true
 }
 
-variable "k3s_server_ip" {
+variable "k3s_server_host" {
   type      = string
   sensitive = true
 }
 
 variable "k3s_token" {
+  type      = string
+  sensitive = true
+}
+
+variable "tailscale_auth_key" {
   type      = string
   sensitive = true
 }
@@ -54,8 +59,9 @@ module "node-ls-tokyo-k3s-agent01" {
 
   node_name             = "ls-tokyo-k3s-agent01"
   aws_availability_zone = "ap-northeast-1a"
-  k3s_server_ip         = var.k3s_server_ip
+  k3s_server_host       = var.k3s_server_host
   k3s_token             = var.k3s_token
+  tailscale_auth_key    = var.tailscale_auth_key
 }
 
 

@@ -34,7 +34,7 @@ spec:
     spec:
       containers:
         - name: api-server
-          image: ghcr.io/hellodhlyn/baql:v1.2.0
+          image: ghcr.io/hellodhlyn/baql:v2.0.0-rc5
           resources:
             requests:
               cpu: 200m

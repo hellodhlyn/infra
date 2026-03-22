@@ -47,8 +47,6 @@ spec:
                 name: shiori-configs
             - secretRef:
                 name: shiori-secrets
-            - secretRef:
-                name: shiori-application-credentials
           ports:
             - containerPort: 3000
               name: api-server-port

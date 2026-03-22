@@ -14,7 +14,20 @@ export NEEDRESTART_MODE=a
 apt update -y && apt upgrade -y
 
 
+# Install tailscale
+echo "*** Installing tailscale..."
+curl -fsSL https://tailscale.com/install.sh | sh
+tailscale up --authkey=${TAILSCALE_AUTH_KEY} --accept-dns=false
+while ! tailscale ip -4; do
+  sleep 1
+done
+
+
 # Install k3s
 echo "*** Installing k3s agent..."
-export INSTALL_K3S_EXEC="agent --server https://${K3S_SERVER_IP}:6443 --token ${K3S_TOKEN}"
+export INSTALL_K3S_EXEC="agent \
+	--server ${K3S_SERVER_HOST} \
+	--token ${K3S_TOKEN} \
+	--node-ip $(tailscale ip -4) \
+	--flannel-iface tailscale0"
 curl -sfL https://get.k3s.io | sh -
